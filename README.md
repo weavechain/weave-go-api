@@ -7,8 +7,7 @@
 ```Go
 import (
 	"fmt"
-	"goapi/weaveapi"
-
+	"github.com/weavechain/weave-go-api"
 	"gitlab.com/c0b/go-ordered-json"
 )
 

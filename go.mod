@@ -1,4 +1,4 @@
-module goapi
+module github.com/weavechain/weave-go-api
 
 go 1.18
 
