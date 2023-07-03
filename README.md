@@ -4,34 +4,44 @@
 
 #### Data read sample
 
+```sh
+$ go mod init sample
+$ go mod tidy
+$ go run sample.go
+```
+
 ```Go
+package main
+
 import (
 	"fmt"
-	"github.com/weavechain/weave-go-api"
-	"gitlab.com/c0b/go-ordered-json"
+
+	"github.com/weavechain/weave-go-api/weaveapi"
 )
 
-pub, pvk := weaveapi.NodeApiGenerateKeys()
+func main() {
+	pub, pvk := weaveapi.NodeApiGenerateKeys()
 
-fmt.Println("Public key: ", pub)
-fmt.Println("Private key: ", pvk)
+	fmt.Println("Public key: ", pub)
+	fmt.Println("Private key: ", pvk)
 
-node := "https://public.weavechain.com:443/92f30f0b6be2732cb817c19839b0940c"
-organization := "weavedemo"
-scope := "shared"
-table := "directory"
+	node := "https://public.weavechain.com:443/92f30f0b6be2732cb817c19839b0940c"
+	organization := "weavedemo"
+	scope := "shared"
+	table := "directory"
 
-cfg := weaveapi.WeaveClientConfig(pub, pvk, node, organization)
+	cfg := weaveapi.WeaveClientConfig(pub, pvk, node, organization)
 
-cfgJson, error := cfg.MarshalJSON()
-weaveapi.HandleError(error)
+	cfgJson, error := cfg.MarshalJSON()
+	weaveapi.HandleError(error)
 
-nodeApi, session := weaveapi.ConnectWeaveApi(string(cfgJson), "")
+	nodeApi, session := weaveapi.ConnectWeaveApi(string(cfgJson), "")
 
-reply, error := nodeApi.Read(session, scope, table, nil, weaveapi.READ_DEFAULT_NO_CHAIN()).Await()
-weaveapi.HandleError(error)
+	reply, error := nodeApi.Read(session, scope, table, nil, weaveapi.READ_DEFAULT_NO_CHAIN()).Await()
+	weaveapi.HandleError(error)
 
-fmt.Println(reply)
+	fmt.Println(reply)
+}
 ```
 
 #### Docs
